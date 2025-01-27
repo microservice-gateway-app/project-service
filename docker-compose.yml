@@ -1,0 +1,32 @@
+version: "3.9"
+name: project-service
+services:
+  project_db:
+    image: postgres:17-alpine
+    container_name: project-db
+    ports:
+      - "54320:5432"
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    environment:
+      - POSTGRES_USER=projects
+      - POSTGRES_PASSWORD=projects
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - internal
+ 
+  project_service:
+    container_name: project-service
+    build:
+      context: .
+    env_file: .env
+    ports:
+      - "8000:8000"
+    networks:
+      - internal
+
+networks:
+  internal:
+    name: project-internal
+    external: true

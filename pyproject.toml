@@ -1,0 +1,41 @@
+[project]
+name = "projects"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [{ name = "", email = "binhdoitsme@gmail.com" }]
+dependencies = [
+    "pydantic>=2.10.3",
+    "uvicorn>=0.32.1",
+    "fastapi>=0.115.6",
+    "injector>=0.22.0",
+    "sqlalchemy[asyncio]>=2.0.36",
+    "pydantic-settings>=2.6.1",
+    "alembic>=1.14.0",
+    "asyncpg>=0.30.0",
+    "python-jose>=3.3.0",
+    "cryptography>=44.0.0",
+]
+requires-python = "==3.12.*"
+readme = "README.md"
+license = { text = "MIT" }
+
+[tool.pdm]
+distribution = false
+
+[tool.pdm.scripts]
+_.env_file = ".env"
+start = { cmd = "python src/main.py", env = { PYTHONPATH = "./src" } }
+create_migration = "alembic revision --autogenerate"                                                                     # -m "<message>"
+apply_migration = "alembic upgrade head"
+rollback_migration = "alembic downgrade head-1"
+test = { cmd = "pytest --cov-config=tox.ini --cov=src --cov-report term-missing tests", env = { PYTHONPATH = "./src" } }
+lint = { cmd = "ruff check --config ruff.toml"}
+
+[dependency-groups]
+dev = [
+    "pdm>=2.22.0",
+    "types-python-jose>=3.3.4.20240106",
+    "pytest>=8.3.4",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.8.4",
+]
