@@ -25,6 +25,7 @@ distribution = false
 [tool.pdm.scripts]
 _.env_file = ".env"
 start = { cmd = "python src/main.py", env = { PYTHONPATH = "./src" } }
+dev = { cmd = "uvicorn src.main:app --port 8001 --host 0.0.0.0 --reload", env = { PYTHONPATH = "./src" } }
 create_migration = "alembic revision --autogenerate"                                                                     # -m "<message>"
 apply_migration = "alembic upgrade head"
 rollback_migration = "alembic downgrade head-1"

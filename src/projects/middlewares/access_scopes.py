@@ -14,7 +14,7 @@ from ..core.services.access import Actor, ProjectScope
 
 # Define the HTTPBearer method for token validation
 access_token_method = HTTPBearer(
-    scheme_name="AccessTokenAuth", description="Place access_token here"
+    scheme_name="AccessTokenAuth", description="Place access_token here",
 )
 
 

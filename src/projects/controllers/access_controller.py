@@ -6,7 +6,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from fastapi import Body, Header, HTTPException
 from jose import jwt
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from ..config import ProjectServiceConfigurations
 from ..controllers.base import BaseController, controller
@@ -15,6 +15,15 @@ from ..core.services.access import ProjectScope
 
 class AccessTokenRequest(BaseModel):
     scopes: list[ProjectScope] = Field(default_factory=list, min_length=1)
+
+    @field_validator("scopes", mode="before")
+    def validate_scopes(cls, value: list[str]):
+        return [
+            ProjectScope(scope)
+            for scope in list[str](value)
+            if scope in ProjectScope._value2member_map_
+        ]
+
     ttl: int = Field(default=1200, description="Access token time-to-live", le=2400)
 
 

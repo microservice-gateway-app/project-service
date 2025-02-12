@@ -6,7 +6,7 @@ from pydantic_settings import BaseSettings
 
 
 class ProjectServiceConfigurations(BaseSettings):
-    DB_URI: str = "postgresql+asyncpg://projects:projects@localhost:54320/projects"
+    DB_URI: str = "postgresql+asyncpg://projects:projects@127.0.0.1:54320/projects"
     SECRET_KEY: str = "project-service-secret"
     ALGORITHM: str = "HS256"
     PRIVATE_KEYFILE: str = "private.pem"
